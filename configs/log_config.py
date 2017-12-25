@@ -24,14 +24,6 @@ log_config = {
             # then file opening is deferred until the first call to emit().
             'delay': True,
         },
-        "timedfile": {  # 在多进程下会出问题
-            "formatter": "standard",
-            # "filename": "logs/mylog.log",
-            "class": "logging.handlers.TimedRotatingFileHandler",
-            "level": "DEBUG",
-            "when": "midnight",  # 每天半夜切分日志
-            "backupCount": 60    # 保留60天的日志
-        },
         "socket": {
             "level": "DEBUG",
             "class": "logging.handlers.SocketHandler",
