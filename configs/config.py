@@ -1,19 +1,39 @@
 # coding: utf-8
+'''
+存数据库的配置
+'''
 
-import os
 
-basedir = os.path.dirname(os.path.abspath(__file__))
-
-
-class AppConfig(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
-
-    # 追踪对象的修改并且发送信号，比较耗内存,在需要监听signal时需要用到
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:password@127.0.0.1/test'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-    SQLALCHEMY_ECHO = False  # 是否显示sqlalchemy的log，适用于debug
-    SQLALCHEMY_POOL_SIZE = 20  # 连接池大小
-    SQLALCHEMY_MAX_OVERFLOW = 20  # 在超出连接池后可以新增的线程数，这些线程用后即销毁
-    SQLALCHEMY_POOL_RECYCLE = 60 * 60 * 2  # 不同的数据库不同的数值，当为MySQL时默认为2h
+dbconfigs = {
+    "elasticsearch": {
+        "HOST": ["192.168.10.219", "192.168.10.225", "192.168.12.34"],
+        "USER": "elasti",
+        "PASSWORD": "changeme"
+    },
+    "hbase": {
+        "HOST": "192.168.12.34"
+    },
+    "mongodb": {
+        "HOST": "192.168.10.219",
+        "PORT": 49019,
+        "USER": "mongodb",
+        "PASSWORD": "password",
+        "MINPOOLSIZE": 20,
+        "MAXPOOLSIZE": 30
+    },
+    "redis": {
+        "HOST": "192.168.10.219",
+        "PORT": 6002,
+        "DB": 3,
+        "MAX_CONNECTIONS": 20,
+        "PASSWORD": "Hhly2015"
+    },
+    "mysql": {
+        "HOST": '127.0.0.1',
+        "PORT": 3306,
+        "DB": "test",
+        "POOLSIZE": 20,
+        "USER": "root",
+        "PASSWORD": "password"
+    }
+}
