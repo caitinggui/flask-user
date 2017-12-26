@@ -21,6 +21,14 @@ admin默认拥有所有权限，所以在user的can判断中，判断isAdmin就�
 
 另外，如果要确认只有文档的所有者才有的权限，可以在路由函数中自己判断是否为文档所有者
 
+# 关于用户头像上传, 文件上传
+
+上传的函数已基本可用，但是不能通过photos.url(avatar)的形式获取url，因为还有个子目录藏在flask-uploads的配置下，
+
+可以通过user.id自己计算(不能用Email，因为Email是可以被修改的,但事后映射的地址不对)，也可以通过用户user.toJosn()获取
+
+文件可以直接通过files.path返回绝对路径（flask-uploads不判断文件是否存在，只是根据配置的路径自动补全）
+
 # 关于分支
 
 分支flask-login基于flask-login实现，适用于前后端不分离的项目，sessionid保存在cookie中

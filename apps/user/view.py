@@ -26,6 +26,7 @@ def saveAvatar(user, img):
         raise(ValueError)
     suffix = img.filename.split('.')[-1]
     filename = '{}.{}'.format(hash(user.email), suffix)
+    # 映射路径只能用不变的id去做，不能用email这些可以被修改的变量来做，不然映射会出问题
     folder = str(user.id % Constant.avatar_folder_size)  # 一个目录下的文件过多会影响读文件效率
     folder = os.path.join(Constant.avatar_basedir, folder)
     filename = photos.save(img, folder=folder, name=filename)
@@ -35,6 +36,7 @@ def saveAvatar(user, img):
 
 @user.route("/regist", methods=["POST"])
 def regist():
+    """注册过程有缺陷，要加上confirm等"""
     email = requestPostParam(request, 'email')
     password = requestPostParam(request, 'password')
     img = request.files.get("img", None)
