@@ -25,3 +25,10 @@ def webJson(status, data=''):
         "data": data
     }
     return jsonify(result)
+
+
+class ParamsError(Exception):
+    def __init__(self, data=None, *args, **kwargs):
+        """这个data和返回结果的data有关"""
+        super(ParamsError, self).__init__(self, *args, **kwargs)
+        self.data = data

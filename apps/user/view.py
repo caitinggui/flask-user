@@ -12,7 +12,7 @@ from flask_uploads import UploadNotAllowed
 
 from .. import db, basic_auth, token_auth, multi_auth, photos, files
 from ..models import User, Permission
-from utils import requestGetParam, requestPostParam, RetCode, webJson, permission_required, Constant
+from utils import requestGetParam, requestPostParam, RetCode, webJson, permission_required, Constant, ParamsError
 
 
 user = Blueprint('user', __name__)
@@ -88,6 +88,11 @@ def test():
 @permission_required(Permission.DOWNLOAD)
 def testPermission():
     return 'your rights ard OK'
+
+
+@user.route('/test_params')
+def testParams():
+    raise ParamsError('my error')
 
 
 @user.route('/upload', methods=["POST"])

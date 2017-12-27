@@ -9,7 +9,7 @@ import click  # 要import，不然app.cli.command不生效
 from werkzeug.exceptions import HTTPException
 
 from apps import createApp
-from utils import RetCode, webJson
+from utils import RetCode, webJson, ParamsError
 from configs.log_config import log_config
 
 
@@ -31,6 +31,11 @@ def handle401(error):
 @app.errorhandler(404)
 def handle404(error):
     return webJson(RetCode.PAGE_NOT_FOUND)
+
+
+@app.errorhandler(ParamsError)
+def handleParamsError(error):
+    return webJson(RetCode.PARAMS_ERROR, data=error.data)
 
 
 @app.errorhandler(Exception)
