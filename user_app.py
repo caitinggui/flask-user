@@ -55,6 +55,13 @@ def ishell():
     embed()
 
 
+@app.cli.command(short_help='Runs testcase')
+def test():
+    import unittest
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner(verbosity=2).run(tests)
+
+
 @app.route('/')
 def index():
     return "hello"

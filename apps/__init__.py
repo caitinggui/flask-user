@@ -14,15 +14,18 @@ db = SQLAlchemy()
 basic_auth = HTTPBasicAuth()
 token_auth = HTTPTokenAuth(scheme='Bearer')
 multi_auth = MultiAuth(basic_auth, token_auth)
+
 app = Flask(__name__)
-app.config.from_object(AppConfig)
-db.init_app(app)
-migrate = Migrate(app, db)
+
 photos = UploadSet('photos', IMAGES)  # 'photos'就是flask-uploads set的名字
 files = UploadSet('files', ALL)  # 路径是default加上set name
 
 
 def createApp():
+    app.config.from_object(AppConfig)
+    db.init_app(app)
+    migrate = Migrate(app, db)
+
     configure_uploads(app, photos)
     configure_uploads(app, files)
     from .user.view import user  # 不能放外面，否则会互相依赖
